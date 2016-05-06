@@ -1,0 +1,61 @@
+[
+  {
+    "project": "doubanevents",
+    "source_type": "API",
+    "method": "GET",
+    "content_type": "json",
+    "Auth": "BODY",
+    "headers": null,
+    "project_type":"API-JSON",
+    "query": {
+      "key1": {
+        "key": "loc",
+        "type": "DEFAULT",
+        "value": "118318"
+      },
+      "key2": {
+        "key": "day_type",
+        "type": "DEFAULT",
+        "value": "future"
+      },
+      "key3": {
+        "key": "type",
+        "type": "DEFAULT",
+        "value": "all"
+      }
+    },
+    "seed": "https://api.douban.com/v2/event/list",
+    "page_key":"page_number",
+    "next_handle": "PAGE",
+    "next_key": "page_count",
+    "pagination":{
+      "page_key":"start",
+      "vol":{
+        "method":"DEFAULT",
+        "value":"20"
+      },
+      "max_count":{
+        "method":"JPATH",
+        "value":"total"
+      },
+      "start":"0"
+    },
+    "data_node":"events",
+    "convert": {
+      "category": "category",
+      "title": "title",
+      "href": "alt",
+      "content": "content",
+      "start_time": "begin_time",
+      "end_time": "end_time",
+      "geo": "geo",
+      "city": "loc_name",
+      "region": "region_name",
+      "thumbnail": "image",
+      "image": "image_hlarge",
+      "location": "address",
+      "owner": "owner"
+
+    }
+  }
+]

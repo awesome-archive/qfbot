@@ -1,0 +1,44 @@
+{
+  "project": "itjuzi",
+  "_type": "HTML",
+  "beat": "WEEK",
+  "source": "itjuzi.com",
+  "templates":[
+    {
+      "project": "itjuzi",
+      "chain": "PAGE",
+      "pipe": null,
+      "head": true,
+      "name": "itjuzi-investfim",
+      "_next": null,
+      "seed":"http://itjuzi.com/investfirm/{page}",
+      "headers": null,
+      "params":[{
+        "key":"page",
+        "spec":"FORMAT",
+        "value": null,
+        "option":{
+          "_type":"page",
+          "_format":null,
+          "condition":null,
+          "method":null,
+          "vol": 1,
+          "max_count": 1399,
+          "start": 1
+        }
+      }],
+      "href": null,
+      "items": [
+        {
+          "name":"title",
+          "method":"XPATH",
+          "url": false,
+          "value":".//div[contains(@class, 'public-info')]//text()"
+        }
+      ],
+      "update":"ONCE",
+      "expired":null,
+      "section": null
+    }
+  ]
+}

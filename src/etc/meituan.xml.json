@@ -1,0 +1,83 @@
+[
+  {
+    "project": "nuomi",
+    "source": "www.nuomi.com",
+    "project_type": "API-RSS-XML",
+    "frequency": "weekly",
+    "is_active": true,
+    "pagnition": null,
+    "section": "url",
+    "TIMESTAMP": null,
+    "basic": {
+      "header": null,
+      "auth_position": null,
+      "method": "GET",
+      "seed": "http://www.nuomi.com/api/dailydeal",
+      "query": {
+        "list": [
+          {
+            "key": "city",
+            "value": [
+              "beijing",
+              "chengdu"
+            ]
+          }
+        ],
+        "constant": [
+          {
+            "key": "version",
+            "value": "v1"
+          }
+        ]
+      }
+    },
+    "category_key": null,
+    "node": [
+      {
+        "name": "title",
+        "xpath": "//title/text()"
+      },
+      {
+        "name": "href",
+        "xpath": "loc/text()"
+      },
+      {
+        "name": "img",
+        "xpath": "//image/text()"
+      },
+      {
+        "name": "longitude",
+        "xpath": "//longitude/text()"
+      },
+      {
+        "name": "latitude",
+        "xpath": "//latitude/text()"
+      },
+      {
+        "name": "images",
+        "xpath": "//image//text()"
+      },
+      {
+        "name": "city",
+        "xpath": "//city/text()"
+      },
+      {
+        "name": "start_time",
+        "xpath": "//startTime/text()"
+      },
+      {
+        "name": "location",
+        "xpath": "//addr/text()"
+      },
+      {
+        "name": "end_time",
+        "xpath": "//endTime/text()"
+      }
+    ],
+    "next": {
+      "method": "XPATH",
+      "value": ""
+    },
+    "expired": null
+  }
+]
