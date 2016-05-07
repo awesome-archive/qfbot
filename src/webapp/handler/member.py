@@ -13,7 +13,7 @@ from bson import json_util
 from .base import ApiAuthBaseHandler
 
 
-class UserHandler(ApiAuthBaseHandler):
+class MemberHandler(ApiAuthBaseHandler):
 
     @gen.coroutine
     def _get_(self):
@@ -113,3 +113,7 @@ class UserHandler(ApiAuthBaseHandler):
         yield self.db['user'].remove({"_id": u_id})
         msg = {'code': 200, 'detail': "delete finished"}
         raise gen.Return(msg)
+
+member_routes = [
+    (r'/member/?', MemberHandler),
+]

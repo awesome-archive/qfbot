@@ -6,6 +6,7 @@
 import tornado.web
 import motor
 import tornadoredis
+import logging
 
 from .handler import urls
 from . import setting
@@ -21,7 +22,7 @@ class Application(tornado.web.Application):
             login_url="/login",
             debug=setting.DEBUG
         )
-
+        logging.error(urls)
         super(Application, self).__init__(urls, **settings)
         self.db = motor.MotorClient(setting.MONGO_URI)[setting.MONGO_DB]
         pool = tornadoredis.ConnectionPool(
