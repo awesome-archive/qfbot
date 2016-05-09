@@ -99,7 +99,7 @@ class ApiAuthBaseHandler(BaseHandler):
         :param data: Message object.
         :return:
         """
-        # self.set_header("Content-Type", 'application/json')
+        self.set_header("Content-Type", 'application/json')
         msg = json.dumps(data, default=json_util.default)
         self.write(msg)
         self.finish()
