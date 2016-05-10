@@ -11,13 +11,11 @@ from .. import setting
 
 from tornado import gen
 from tornado import web
-import uuid
-from tornado import template
 
-class LoginHandler(ApiAuthBaseHandler):
+class LoginHandler(BaseHandler):
 
     @gen.coroutine
-    def _authenticate(self):
+    def authenticate(self):
         token = self.get_secure_cookie("Token")
         if not token:
             raise gen.Return(None)
@@ -34,19 +32,15 @@ class LoginHandler(ApiAuthBaseHandler):
 
     @web.asynchronous
     @gen.coroutine
-    def _get_(self, *args, **kwargs):
-        flag = yield self._authenticate()
+    def get(self, *args, **kwargs):
+        flag = yield self.authenticate()
         if flag:
             self.redirect("/")
         else:
             print args, kwargs
-            loader = template.Loader(setting.TEMPLATE)
             values = {"errors": ""}
             values.update(kwargs)
             self.render("login.html")
-            html = loader.load("login.html").generate(**values)
-            self.write(html)
-            self.finish()
 
     @web.asynchronous
     @gen.coroutine
@@ -128,8 +122,7 @@ class IndexHandler(ApiAuthBaseHandler):
             self.render("index.html", **values)
 
 
-
-user_routes = [
+page_routes = [
     (r"/login/?", LoginHandler),
     (r"/signup/?", SignupHandler),
     (r"/logout/?", LogoutHandler),
