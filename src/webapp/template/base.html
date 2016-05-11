@@ -14,7 +14,9 @@
 <body>
 <div id="app">
 </div>
-{% block main_body %} {% end %}
+<div class="main-content">
+{% block main_body %}{% end %}
+</div>
 <div><div><div><span>{% module xsrf_form_html() %}</span></div></div></div>
 <div><div></div></div>
 {% block foot_script %}

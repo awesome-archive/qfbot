@@ -8,8 +8,30 @@
 {% end %}
 
 {% block main_body %}
-<div class="login-section">
-    <div>login</div>
+<div class="login-page">
+    <div class="container">
+        <div class="login-section">
+            <div class="login-card">
+                <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+                <p id="profile-name" class="profile-name-card"></p>
+                <form class="form-signin" action="/u/login/" method="post">
+                    <span id="reauth-email" class="reauth-email"></span>
+                    <input type="text" name="username" class="form-control" placeholder="Email" required autofocus>
+                    <input type="password" name="password" class="form-control" placeholder="Password" required>
+                    <div id="remember" class="checkbox">
+                        <label>
+                            <input type="checkbox" value="remember-me"> Remember me
+                        </label>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">登录</button>
+                    {% module xsrf_form_html() %}
+                </form><!-- /form -->
+                <a href="#" class="forgot-password">
+                    Forgot the password?
+                </a>
+            </div><!-- /card-container -->
+        </div>
+    </div><!-- /container -->
 </div>
 {% end %}
 
