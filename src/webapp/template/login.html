@@ -13,22 +13,23 @@
         <div class="login-section">
             <div class="login-card">
                 <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
-                <p id="profile-name" class="profile-name-card"></p>
-                <form class="form-signin" action="/u/login/" method="post">
+                <p class="login-title">登录</p>
+                <form class="form-signin" action="/login/" method="post">
                     <span id="reauth-email" class="reauth-email"></span>
                     <input type="text" name="username" class="form-control" placeholder="Email" required autofocus>
                     <input type="password" name="password" class="form-control" placeholder="Password" required>
                     <div id="remember" class="checkbox">
                         <label>
-                            <input type="checkbox" value="remember-me"> Remember me
+                            <input type="checkbox" value="remember-me"> 记住我
+
                         </label>
+                        <a href="#" class="forgot-password">
+                            忘记密码?
+                        </a>
                     </div>
                     <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">登录</button>
                     {% module xsrf_form_html() %}
                 </form><!-- /form -->
-                <a href="#" class="forgot-password">
-                    Forgot the password?
-                </a>
             </div><!-- /card-container -->
         </div>
     </div><!-- /container -->
