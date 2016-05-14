@@ -23,10 +23,10 @@ class IndexHandler(ApiAuthBaseHandler):
         if not token:
             self.redirect("/login")
             return
-        user_id = yield gen.Task(self.rdc.get, token)
-        user = yield gen.Task(self.db["user"].find_one, {"_id": user_id})
+        # user_id = yield gen.Task(self.rdc.get, token)
+        user = yield self.db["user"].find_one({"_id": str(token)})
         if user:
-            self.current_user = user_id
+            self.current_user = user
         else:
             self.redirect("/login")
             return
@@ -95,17 +95,29 @@ class LoginHandler(BaseHandler):
             self.finish()
             return
         email = data.get("email", "")
-        password = data.get("password")
+        password = data.get("password", "")
         find = yield self.db['user'].find_one({"email": email})
+        logging.error(find)
         if not find:
             self.write({"code": 410, "detail": u"email or password error"})
             self.finish()
             return
         salt = find.get("salt")
-        hash_pw = find.get("hash_pw")
-        if Authenticate.check_password(salt, password, hash_pw):
-            self.set_secure_cookie("Token", find.get("user_id"))
+        hash_pw = find.get("password")
+        try:
+            flag = Authenticate.check_password(salt, password, hash_pw)
+        except ValueError, e:
+            logging.error(e)
+            self.write({"code": 410, "detail": u"email or password error"})
+            self.finish()
+            return
+        if flag:
+            self.set_secure_cookie("Token", find.get("_id"))
             self.write({"code": 200, "detail": "login success"})
+            self.finish()
+            return
+        else:
+            self.write({"code": 410, "detail": u"email or password error"})
             self.finish()
             return
 

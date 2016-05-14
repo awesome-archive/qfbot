@@ -8,6 +8,21 @@
 import hashlib
 
 
+def _encrypt(salt, raw_pass):
+    """
+    :param salt:
+    :param raw_pass:
+    :return:
+    """
+    if not isinstance(salt, unicode):
+        salt = u""
+    if not isinstance(raw_pass, unicode):
+        raise ValueError("invalid raw password type.")
+    to_hash = str(salt) + raw_pass.encode("utf-8")
+    hash_pw = hashlib.sha256(to_hash).hexdigest()
+    return hash_pw
+
+
 class Authenticate(object):
     """
     """
@@ -20,7 +35,15 @@ class Authenticate(object):
         :param hash_pass:
         :return:
         """
-        _hash_pass = cls.encrypt(salt, raw_pass)
+        print ">>>> raw pass"
+        print raw_pass
+        print ">>>> hashed pass"
+        print hash_pass
+        print ">>>> salt"
+        print salt
+        _hash_pass = _encrypt(salt, raw_pass)
+        print ">>> __hashed pass"
+        print _hash_pass
         if str(_hash_pass) == str(hash_pass):
             return True
         else:
@@ -32,14 +55,3 @@ class Authenticate(object):
         :param user:
         :return:
         """
-
-    @staticmethod
-    def encrypt(salt, raw_pass):
-        """
-        :param salt:
-        :param raw_pass:
-        :return:
-        """
-        to_hash = salt.encode("utf-8") + raw_pass.encode("utf-8")
-        hash_pw = hashlib.sha256(to_hash).hexdigest()
-        return hash_pw
