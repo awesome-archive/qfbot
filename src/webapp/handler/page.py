@@ -10,45 +10,19 @@ from tornado import web
 import logging
 import json
 
-from .base import BaseHandler, ApiAuthBaseHandler
+from .base import BaseHandler, ApiAuthBaseHandler, WebAuthBaseHandler
 from ..tools.authenticate import Authenticate
 # from .. import setting
 
 
-class IndexHandler(ApiAuthBaseHandler):
-
-    @gen.engine
-    def _authenticate(self, callback=None):
-        token = self.get_secure_cookie("Token")
-        if not token:
-            self.redirect("/login")
-            return
-        # user_id = yield gen.Task(self.rdc.get, token)
-        user = yield self.db["user"].find_one({"_id": str(token)})
-        if user:
-            self.current_user = user
-        else:
-            self.redirect("/login")
-            return
-        if hasattr(self, "_role"):
-            if user.get("role", 0) < self._role:
-                self.redirect("/login")
-                return
-        if callback:
-            callback(user)
+class IndexHandler(WebAuthBaseHandler):
 
     @web.asynchronous
     @gen.coroutine
     def _get_(self):
-        user = yield gen.Task(self._authenticate)
-        if not self.current_user:
-            self.redirect("/login")
-            return
-        else:
-            values = {
-                "user": user
-            }
-            self.render("index.html", **values)
+        user = self.current_user
+        values = user
+        self.render("index.html", **values)
 
 
 class LoginHandler(BaseHandler):
@@ -137,14 +111,14 @@ class SignupHandler(BaseHandler):
         """
 
 
-class LogoutHandler(ApiAuthBaseHandler):
+class LogoutHandler(WebAuthBaseHandler):
 
     @web.asynchronous
     @gen.coroutine
     def _get_(self):
-        token = self.get_secure_cookie("Token")
-        yield gen.Task(self.rdc.delete, token)
-        self.redirect("/")
+        self.clear_all_cookies()
+        logging.error("login success")
+        self.redirect("/login")
 
 
 class PasswordResetHandler(ApiAuthBaseHandler):

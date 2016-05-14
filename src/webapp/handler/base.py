@@ -114,12 +114,12 @@ class ApiAuthBaseHandler(BaseHandler):
 
     @gen.engine
     def _authenticate(self, callback=None):
-        token = self.request.headers.get("Token")
-        if not token:
+        user_id = self.get_secure_cookie("Token")
+        if not user_id:
             raise web.HTTPError(403)
-        user_id = yield gen.Task(self.rdc.get, token)
-        if user_id:
-            self.current_user = user_id
+        user = yield self.db["user"].find_one({"_id": str(user_id)})
+        if user:
+            self.current_user = user
         else:
             raise web.HTTPError(403)
         if callback:
@@ -154,14 +154,18 @@ class WebAuthBaseHandler(BaseHandler):
 
     @gen.engine
     def _authenticate(self, callback=None):
-        token = self.request.headers.get("UID")
-        if not token:
-            raise web.HTTPError(403)
-        user_id = yield gen.Task(self.rdc.get, token)
-        if user_id:
-            self.current_user = user_id
+        user_id = self.get_secure_cookie("Token")
+        if not user_id:
+            self.clear_all_cookies()
+            self.redirect("/login")
+            return
+        user = yield self.db["user"].find_one({"_id": str(user_id)})
+        if user:
+            self.current_user = user
         else:
-            raise web.HTTPError(403)
+            self.clear_all_cookies()
+            self.redirect("/login")
+            return
         if callback:
             callback(None)
 
