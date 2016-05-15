@@ -115,5 +115,5 @@ class MemberHandler(ApiAuthBaseHandler):
         raise gen.Return(msg)
 
 member_routes = [
-    (r'/member/?', MemberHandler),
+    (r'/api/member/?', MemberHandler),
 ]

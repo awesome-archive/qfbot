@@ -18,29 +18,6 @@ from .base import ApiAuthBaseHandler
 class DataHandler(ApiAuthBaseHandler):
 
     @coroutine
-    def get_posts(self, category, status, page_num, project, qtime):
-        query = {"expired": None}
-
-        if status != "ALL":
-            if status == "fail":
-                status = 0
-            query.update({"status": status})
-        if category:
-            query.update({"category": category})
-        if project:
-            query.update({"source": project})
-        if qtime:
-            query.update(qtime)
-        cursor = (self.db["rawdata"].find(query)
-                  .skip(int(page_num)*10)
-                  .limit(10))
-
-        res = yield cursor.to_list(10)
-        cnts = yield self.db["rawdata"].find(query).count()
-        result = {"data": res, "total": cnts}
-        raise gen.Return(result)
-
-    @coroutine
     def _get_(self):
         status = self.get_argument("status", default=None)
         category = self.get_argument("category", default=None)
@@ -75,6 +52,29 @@ class DataHandler(ApiAuthBaseHandler):
         message = json.dumps(result, default=json_util.default)
         self.write(message)
         self.finish()
+
+    @coroutine
+    def get_posts(self, category, status, page_num, project, qtime):
+        query = {"expired": None}
+
+        if status != "ALL":
+            if status == "fail":
+                status = 0
+            query.update({"status": status})
+        if category:
+            query.update({"category": category})
+        if project:
+            query.update({"source": project})
+        if qtime:
+            query.update(qtime)
+        cursor = (self.db["rawdata"].find(query)
+                  .skip(int(page_num)*10)
+                  .limit(10))
+
+        res = yield cursor.to_list(10)
+        cnts = yield self.db["rawdata"].find(query).count()
+        result = {"data": res, "total": cnts}
+        raise gen.Return(result)
 
     @coroutine
     def _post_(self):
