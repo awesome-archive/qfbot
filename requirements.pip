@@ -4,5 +4,6 @@ motor
 redis
 billiard
 celery
+pika
 scrapy
 service-identity
