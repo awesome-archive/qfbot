@@ -35,8 +35,8 @@ AVATAR_DEFAULT = [
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 
-STATIC = os.path.join(ROOT, "static")
-TEMPLATE = os.path.join(ROOT, "templates")
+STATIC = os.path.join(ROOT, "webapp/static")
+TEMPLATE = os.path.join(ROOT, "webapp/template")
 
 USER_ONE = {
     "username": "qfbot",
