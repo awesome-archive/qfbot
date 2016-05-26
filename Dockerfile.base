@@ -1,0 +1,7 @@
+FROM ubuntu:14.04
+
+RUN apt-get update -qq
+RUN apt-get install python-dev python-pip libxml2-dev libxslt-dev
+RUN pip install lxml
+RUN pip install tornado twisted redis pika scrapy service-identity
+
