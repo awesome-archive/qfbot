@@ -1,7 +1,7 @@
 # Qfbot
 
 
-Crawler build with scrapy, celery, mongodb, rabbitmq.
+Crawler build with scrapy, mongodb, rabbitmq.
 
 
 ## tag 0.1 features.
