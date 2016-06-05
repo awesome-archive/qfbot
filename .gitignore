@@ -11,8 +11,8 @@ setting.py
 celerybeat-schedule
 *~
 .DS_Store
-*.bz2
-*.gz
+# *.bz2
+# *.gz
 *.zip
 bower_components/
 .sass-cache
@@ -20,3 +20,4 @@ node_modules/
 vendor/
 .db
 *.iml
+depends/

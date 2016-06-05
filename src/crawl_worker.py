@@ -13,12 +13,14 @@ from twisted.internet import defer, reactor, protocol,task
 class CrawlerConsumer(object):
 
     def __init__(self):
-        pass
+        """
+        """
 
     @defer.inlineCallbacks
-    def connect(self):
+    def connect(self, channel):
         param = pika.ConnectionParameters()
         cc = protocol.ClientCreator(reactor, twisted_connection.TwistedProtocolConnection, param)
+        self.exchange = yield channel.exchange_declare(exchange='topic_link',type='topic')
         d = cc.connectTCP('hostname', 5672)
         d.addCallback(lambda protocol: protocol.ready)
         d.addCallback(self.run)
@@ -41,7 +43,8 @@ class CrawlerConsumer(object):
 
     @defer.inlineCallbacks
     def run(self):
-        pass
+        """
+        """
 
 
 def main():
