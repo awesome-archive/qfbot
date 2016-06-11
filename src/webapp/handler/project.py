@@ -65,7 +65,6 @@ class ProjectHandler(ApiAuthBaseHandler):
         :return:
         """
 
-
 project_routes = [
-    (r'/project/?', ProjectHandler),
+    (r'/api/project/?', ProjectHandler),
 ]

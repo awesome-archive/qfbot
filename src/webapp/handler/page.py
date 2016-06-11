@@ -157,6 +157,22 @@ class PasswordForgotHandler(BaseHandler):
         :return:
         """
 
+class ProjectPageHandler(WebAuthBaseHandler):
+    """
+    WEB: project的页面
+    """
+
+    @web.asynchronous
+    @gen.coroutine
+    def _get_(self, *args, **kwargs):
+        """
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        user = self.current_user
+        values = user
+        self.render("project.html", **values)
 
 page_routes = [
     (r"/login/?", LoginHandler),
@@ -164,5 +180,6 @@ page_routes = [
     (r"/logout/?", LogoutHandler),
     (r"/password_reset/?", PasswordResetHandler),
     (r"/password_forget/?", PasswordForgotHandler),
-    (r'/?', IndexHandler)
+    (r'/?', IndexHandler),
+    (r'/project/?', ProjectPageHandler),
 ]
