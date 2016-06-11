@@ -35,8 +35,10 @@ class ProjectHandler(ApiAuthBaseHandler):
                 query.update({"_type": _type})
             if next_id:
                 query.update({"_id": {"$lte": next_id}})
-            projects = yield self.db["project"].find(query)
-            count = projects.count()
+            cursor = self.db["project"].find(query)
+            porjects = yield cursor.to_list(20)
+            count = yield cursor.count()
+            self.write_message({"code": 200, "detail": porjects})
 
     @web.asynchronous
     @gen.coroutine
