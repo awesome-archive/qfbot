@@ -63,7 +63,6 @@ class LoginHandler(BaseHandler):
         """
         try:
             data = json.loads(self.request.body)
-            logging.error(data)
         except Exception, e:
             logging.error(e)
             self.write({"code": 410, "detail": u"email or password error"})
@@ -104,25 +103,12 @@ class SignupHandler(BaseHandler):
     def get(self, *args, **kwargs):
         """
         """
-        self.render("signup.html")
 
     @web.asynchronous
     @gen.coroutine
     def _post_(self):
         """
         """
-        try:
-            data = json.loads(self.request.body)
-            # logging.error(data)
-        except Exception, e:
-            logging.error(e)
-        logging.error(data)
-class SignupSuccessHandler(BaseHandler):
-
-    @web.asynchronous
-    @gen.coroutine
-    def get(self):
-        self.render("signup_success.html")
 
 
 class LogoutHandler(WebAuthBaseHandler):
@@ -196,5 +182,4 @@ page_routes = [
     (r"/password_forget/?", PasswordForgotHandler),
     (r'/?', IndexHandler),
     (r'/project/?', ProjectPageHandler),
-    (r'/signup_success',SignupSuccessHandler),
 ]
