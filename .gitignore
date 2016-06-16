@@ -3,9 +3,9 @@
 *.pid
 .project
 *.log
-setting.py
+#setting.py
 .pydevproject
-/.settings/
+#/.settings/
 /.idea/
 /env/
 celerybeat-schedule
