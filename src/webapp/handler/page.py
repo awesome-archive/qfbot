@@ -101,14 +101,28 @@ class SignupHandler(BaseHandler):
     @web.asynchronous
     @gen.coroutine
     def get(self, *args, **kwargs):
-        """
-        """
+
+        self.render("signup.html")
 
     @web.asynchronous
     @gen.coroutine
     def _post_(self):
-        """
-        """
+
+        try:
+            data = json.loads(self.request.body)
+        except Exception, e:
+            logging.error(e)
+            self.write({"code": 410, "detail": u"signup failed"})
+            self.finish()
+            return
+        logging.error(data)
+
+class SignupSucceedHandler(BaseHandler):
+
+    @web.asynchronous
+    @gen.coroutine
+    def get(self):
+        self.render("signup_succeed.html")
 
 
 class LogoutHandler(WebAuthBaseHandler):
@@ -182,4 +196,5 @@ page_routes = [
     (r"/password_forget/?", PasswordForgotHandler),
     (r'/?', IndexHandler),
     (r'/project/?', ProjectPageHandler),
+    (r'/signup_succeed/?', SignupSucceedHandler),
 ]
