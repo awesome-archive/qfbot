@@ -20,9 +20,9 @@ class Application(tornado.web.Application):
             template_path=setting.TEMPLATE,
             static_path=setting.STATIC,
             login_url="/login",
-            debug=setting.DEBUG
+            debug=setting.DEBUG,
         )
-        logging.error(urls)
+        logging.error('available handlers: '+str(urls))
         super(Application, self).__init__(urls, **settings)
         self.db = motor.MotorClient(setting.MONGO_URI)[setting.MONGO_DB]
         pool = tornadoredis.ConnectionPool(
